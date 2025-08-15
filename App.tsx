@@ -5,15 +5,21 @@
  * @format
  */
 
+import React, { useEffect } from 'react';
 import { NewAppScreen } from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import auth from '@react-native-firebase/auth';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
+
+  useEffect(() => {
+    console.log('Firebase initialized:', auth().app.name);
+  }, []);
 
   return (
     <SafeAreaProvider>
