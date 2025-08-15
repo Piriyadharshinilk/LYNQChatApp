@@ -1,97 +1,105 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# LYNQ-Chat-App-main
 
-# Getting Started
+# LYNQ-Chat-App
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+📱 LYNQ – A Privacy-First, Smart Messaging App
+LYNQ is an end-to-end encrypted, cross-platform messaging application built to redefine secure and intelligent communication. It combines cutting-edge cryptography, real-time communication, and AI-powered features to ensure not just privacy but also a smarter user experience. Designed for mobile platforms, LYNQ empowers users to communicate securely, lookup word meaning and verify shared content.
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 🚀 Project Status (As of August 15, 2025)
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+This project is currently in the initial setup phase. Here's a summary of what has been completed:
 
-```sh
-# Using npm
-npm start
+*   **Project Initialization:** A new React Native project has been created in the `LYNQChatApp` directory.
+*   **Firebase Integration:**
+    *   The core Firebase dependencies (`@react-native-firebase/app` and `@react-native-firebase/auth`) have been added to the project.
+    *   The native Android project has been configured to connect with Firebase. The `build.gradle` files have been updated, and the `google-services.json` file has been added.
 
-# OR using Yarn
-yarn start
+### 🚨 Current Blockers
+The project is currently **not buildable** due to a local environment configuration issue.
+1.  **Android SDK Location:** The build will fail until the local path to the Android SDK is correctly configured.
+2.  **Emulator/Device:** An Android emulator must be running or a physical device must be connected to launch the application.
+
+---
+
+## 🛠️ Development Setup
+
+Follow these steps to get the development environment up and running.
+
+### Prerequisites
+*   Node.js
+*   Java Development Kit (JDK)
+*   Android Studio & Android SDK
+
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd LYNQ-Chat-App-main
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### 2. Install Dependencies
+Navigate to the React Native project directory and install the required npm packages.
+```bash
+cd LYNQChatApp
+npm install
 ```
 
-### iOS
+### 3. Configure Android SDK
+This is a critical step to resolve the current build error.
+1.  Create a new file named `local.properties` inside the `LYNQChatApp/android` directory.
+2.  Open the `local.properties` file and add the following line, **replacing `path/to/your/android/sdk` with the actual path to your Android SDK**:
+    ```
+    sdk.dir=path/to/your/android/sdk
+    ```
+    *Example on Windows:* `sdk.dir=C:\Users\YourUsername\AppData\Local\Android\Sdk`
+    *Example on macOS:* `sdk.dir=/Users/YourUsername/Library/Android/sdk`
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### 4. Run the Application
+1.  Open Android Studio and start an Android emulator, or connect a physical Android device to your computer.
+2.  Run the following command from the `LYNQChatApp` directory to build and launch the app:
+    ```bash
+    npx react-native run-android
+    ```
+---
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+## 📝 Original App Concept
 
-```sh
-bundle install
-```
+### Features
+🔐 **Basic Features:**
+*   **Real-Time Chat** – Send and receive messages instantly with WebSockets.
+*   **End-to-End Encryption** – All messages are protected using X25519 (Key Exchange), ChaCha20-Poly1305(AEAD) and Poly1305 (MAC).
+*   **User Authentication** – Secure login and registration system using Firebase Auth.
+*   **Auto-Link Verification** – Links shared in messages are automatically scanned for phishing or malicious content.
+*   **Media Sharing** – Securely share images and files within chat.
+*   **Group Chats** – Encrypted group chat support with synchronized messages.
 
-Then, and every time you update your native dependencies, run:
+📡 **Advanced Features:**
+*   **Auto-Blocks Unsafe Links** – If a malicious link is detected, the link can be blocked until the user approves it.
+*   **Word Lookup** - Lookup for word meanings within the chat itself.
+*   **Realtime Translation to English** - Translate a message of a different language to english for understanding.
 
-```sh
-bundle exec pod install
-```
+### How It Works
+*   **User Signup/Login:** Generates identity and encryption keys. Authenticates with backend using hashed credentials and Firebase.
+*   **Start a Conversation:** Requests the receiver's pre-keys from the server. Uses E2EE to establish a secure session.
+*   **Send a Message:** Message is encrypted on the client side. Optionally scanned for unsafe links. Sent to server and relayed to the receiver.
+*   **Receive Message:** Decrypted locally using session keys.
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### Security Highlights
+*   Uses X25519 (Key Exchange), ChaCha20-Poly1305(AEAD) and Poly1305 (MAC) for true end-to-end encryption.
+*   All messages are encrypted before leaving the device.
+*   No messages are stored in plaintext, even on the server.
+*   Implements forward secrecy, ensuring past messages stay secure even if current keys are compromised.
+*   Auto-blocks malicious messages until user approval based on threat detection APIs.
 
-```sh
-# Using npm
-npm run ios
+### Supported Platforms
+*   **Mobile:** Planned support via React Native
 
-# OR using Yarn
-yarn ios
-```
+---
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### 🤝 Team
+*   Mirdula R
+*   Piriyadharshini L K
+*   Tayanithaa N S
+*   Logesh Raj B
+*   Jaisurya S
